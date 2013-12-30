@@ -130,17 +130,9 @@
         font-size: 0.55em;
       }
     </style>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript">
       var currentBacklog = "pending";
-
-      /**
-       * Alias for document.getElementById.
-       * @param {string} id The ID of the element to find.
-       * @return {HTMLElement} The found element or null if not found.
-       */
-      function $(id) {
-          return document.getElementById(id);
-      }
 
       function load() {
         $("offline_button").style.display = "none"; // Hide "offline" button
