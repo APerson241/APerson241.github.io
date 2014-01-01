@@ -135,14 +135,14 @@
       var currentBacklog = "pending";
 
       function load() {
-        $("offline_button").style.display = "none"; // Hide "offline" button
-        $("backlog_selection_menu").style.display = "none";
+        $("offline_button").[0].style.display = "none"; // Hide "offline" button
+        $("backlog_selection_menu").[0].style.display = "none";
         
-        $("overlay").style.width = window.innerWidth + "px";
-        $("overlay").style.height = window.innerHeight + "px";
-        $("login_pane").style.top = (window.innerHeight / 2 - 75) + "px";
-        $("login_pane").style.left = (window.innerWidth / 2 - 150) + "px";
-        $("login_pane").style.height = ((window.innerHeight / 4 >= 200)?(window.innerHeight/4):200) + "px";
+        $("overlay").[0].style.width = window.innerWidth + "px";
+        $("overlay").[0].style.height = window.innerHeight + "px";
+        $("login_pane").[0].style.top = (window.innerHeight / 2 - 75) + "px";
+        $("login_pane").[0].style.left = (window.innerWidth / 2 - 150) + "px";
+        $("login_pane").[0].style.height = ((window.innerHeight / 4 >= 200)?(window.innerHeight/4):200) + "px";
       }
 
       function login() {
@@ -166,36 +166,36 @@
         };
         $("offline_button").style.display = ""; // Show "offline" button
         xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
-        xhr.send("?action=login&lgname=" + $("login_username").value + "&lgpassword=" + $("login_password").value);
+        xhr.send("?action=login&lgname=" + $("login_username").[0].value + "&lgpassword=" + $("login_password").[0].value);
       }
       
       function hideLoginPane() {
-        $("overlay").style.opacity = "0";
-        $("overlay").style.display = "none";
-        $("login_pane").style.top = (window.innerHeight + 20) + "px";
+        $("overlay").[0].style.opacity = "0";
+        $("overlay").[0].style.display = "none";
+        $("login_pane").[0].style.top = (window.innerHeight + 20) + "px";
       }
 
       function toggleBacklogMenu() {
-        if($("backlog_selection_menu").style.display == "none") {
-          $("backlog_selection_menu").style.display = "";
-          $("backlog_selection_icon").innerHTML = "(close)";
+        if($("backlog_selection_menu").[0].style.display == "none") {
+          $("backlog_selection_menu").[0].style.display = "";
+          $("backlog_selection_icon").[0].innerHTML = "(close)";
         } else {
-          $("backlog_selection_menu").style.display = "none";
-          $("backlog_selection_icon").innerHTML = "(change)";
+          $("backlog_selection_menu").[0].style.display = "none";
+          $("backlog_selection_icon").[0].innerHTML = "(change)";
         }
       }
 
       function onBacklogSelection(backlog) {
-        $(backlog).className = "selected";
+        $(backlog).[0].className = "selected";
         toggleBacklogMenu();
         switch(backlog) {
         case "missing":
-          $("pending").className = "";
-          $("backlog_span").innerHTML = "Category:AfC submissions with missing AfC template";
+          $("pending").[0].className = "";
+          $("backlog_span").[0].innerHTML = "Category:AfC submissions with missing AfC template";
           break;
         case "pending":
-          $("missing").className = "";
-          $("backlog_span").innerHTML = "Category:Pending AfC submissions";
+          $("missing").[0].className = "";
+          $("backlog_span").[0].innerHTML = "Category:Pending AfC submissions";
           break;
         }
       }
