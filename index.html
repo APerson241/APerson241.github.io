@@ -133,6 +133,8 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript">
       var currentBacklog = "pending";
+      var offlineMode = new Boolean();
+      var offlineModeBacklogCount = 32000;
 
       /**
        * Alias for document.getElementById.
@@ -208,6 +210,28 @@
           break;
         }
       }
+
+      function offlineReviewAction() {
+        if(offlineMode) {
+          offlineModeBacklogCount--;
+          gebid("backlog_count").innerHTML = addCommas(offlineModeBacklogCount) + " <span style=\"font-size: 0.5em;\">remaining</span>";
+        }
+      }
+
+      /**
+       * From http://www.mredkj.com/javascript/numberFormat.html
+       */
+      function addCommas(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
     </script>
   </head>
   <body onload="load();">
@@ -227,7 +251,7 @@
       <span id="login_status">Enter your Wikipedia username and password.</span>
       <br />
       <button type="button" id="login_button" onclick="login();">Login</button>
-      <button type="button" id="offline_button" onclick="hideLoginPane();">Offline Mode</button>
+      <button type="button" id="offline_button" onclick="hideLoginPane();offlineMode=new Boolean(1);">Offline Mode</button>
     </div>
     <div id="top_bar">YABBr: Yet Annother Backlog Burninator - Version 0.0.1</div>
     <br />
@@ -243,8 +267,8 @@
     <div id="sidebar">
       <div id="reviewing_pane">
         <h2>Reviewing lorem ipsum</h2>
-        <button type="button" id="accept">Accept</button>
-        <button type="button" id="decline">Decline</button>
+        <button type="button" id="accept" onclick="offlineReviewAction();">Accept</button>
+        <button type="button" id="decline" onclick="offlineReviewAction();">Decline</button>
         <button type="button" id="comment">Comment</button>
         <br /><br />
         <button type="button" id="skip">Skip</button>
