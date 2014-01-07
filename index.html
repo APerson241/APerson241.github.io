@@ -169,15 +169,16 @@
         }
    
         xhr.onreadystatechange = function() {
-          gebid("login_status").innerHTML = "Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]";
+          gebid("login_status").innerHTML = "Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]\n" + gebid("login_status").innerHTML;
           if(xhr.readyState == 4) {
             var loginElement = xhr.responseXML.getElementsByTagName("error");
-            gebid("login_status").innerHTML = "Wikipedia login status: " + loginElement.getAttribute("code");
+            gebid("login_status").innerHTML += "\nWikipedia login status: " + loginElement.getAttribute("code") + "\n" + gebid("login_status").innerHTML;
           }
         };
         gebid("offline_button").style.display = ""; // Show "offline" button
         xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
         xhr.send("?action=login&lgname=" + gebid("login_username").value + "&lgpassword=" + gebid("login_password").value);
+        gebid("login-status").innerHTML = "Just tried to log in Wikipedia user " + gebid("login_username") + ".\n" + gebid("login_status").innerHTML;
       }
       
       function hideLoginPane() {
