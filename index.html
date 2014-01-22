@@ -5,6 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style type="text/css">
       body { font-family: sans-serif; }
+      button, #overlay, #login_pane, #backlog_selection_icon, #backlog_selection_menu span {
+        -webkit-transition: 0.25s ease;
+        -moz-transition: 0.25s ease;
+        -ms-transition: 0.25s ease;
+        -o-transition: 0.25s ease;
+        transition: 0.25s ease;
+      }
       #overlay {
         background-color: #000000;
         position: fixed;
@@ -115,13 +122,6 @@
       button:hover { border: thin black solid; }
       button:active { border: thin black dashed; }
       .gray { color: #AAAAAA; }
-      button, #overlay, #login_pane, #backlog_selection_icon {
-        -webkit-transition: 0.25s ease;
-        -moz-transition: 0.25s ease;
-        -ms-transition: 0.25s ease;
-        -o-transition: 0.25s ease;
-        transition: 0.25s ease;
-      }
       #backlog_selection_icon {
         font-size: 0.5em;
         cursor: pointer;
@@ -130,7 +130,7 @@
         font-size: 0.55em;
       }
     </style>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript">
       var currentBacklog = "pending";
       var offlineMode = new Boolean();
@@ -172,7 +172,7 @@
           gebid("login_status").innerHTML = "Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]";
           if(xhr.readyState == 4) {
             var loginElement = xhr.responseXML.getElementsByTagName("error");
-            gebid("login_status").innerHTML = "\nWikipedia login status: " + loginElement.getAttribute("code");
+            gebid("login_status").innerHTML = "Wikipedia login status: " + loginElement.getAttribute("code");
           }
         };
         gebid("offline_button").style.display = ""; // Show "offline" button
@@ -216,6 +216,12 @@
         if(offlineMode) {
           offlineModeBacklogCount--;
           gebid("backlog_count").innerHTML = addCommas(offlineModeBacklogCount) + " <span style=\"font-size: 0.5em;\">remaining</span>";
+        }
+      }
+
+      function offlineSkip() {
+        if(offlineMode) {
+          $.getJSON("http://en.wikipedia.org/w/api.php?format=json&action=query&titles=Main%20Page&prop=revisions&rvprop=content", function(data) {gebid("article_text").innerHTML = data;});
         }
       }
 
@@ -272,7 +278,7 @@
         <button type="button" id="decline" onclick="offlineReviewAction();">Decline</button>
         <button type="button" id="comment">Comment</button>
         <br /><br />
-        <button type="button" id="skip">Skip</button>
+        <button type="button" id="skip" onclick="offlineSkip();">Skip</button>
       </div>
       <br />
       <div id="pending_pane">
@@ -282,12 +288,14 @@
     </div>
     <div id="article_pane">
       <div id="article_heading"><span class="gray">Wikipedia talk:Articles for creation/</span>Lorem ipsum</div>
+      <div id="article_text">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
       <p>
         Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
       </p>
+      </div>
     </div>
   </body>
 </html>
