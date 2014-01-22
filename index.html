@@ -135,6 +135,7 @@
       var currentBacklog = "pending";
       var offlineMode = new Boolean();
       var offlineModeBacklogCount = 32000;
+      var loginStatuses = "Loaded variables.";
 
       /**
        * Alias for document.getElementById.
@@ -155,6 +156,14 @@
         gebid("login_pane").style.left = (window.innerWidth / 2 - 150) + "px";
         gebid("login_pane").style.height = ((window.innerHeight / 4 >= 200)?(window.innerHeight/4):200) + "px";
       }
+      
+      function loginStatus(status) {
+        if(gebid("login_show_statuses").style.innerHTML === "&nbsp;") {
+          gebid("login_show_statuses").innnerHTML = "<span style=\"cursor:pointer;\" onclick=\"alert(\"loginStatuses\");\">Show statuses</span>";
+        }
+        gebid("login_status").innerHTML = status;
+        loginStatuses += "\n" + status;
+      }
 
       function login() {
         var xhr; // Yes, this is the request object.
@@ -164,20 +173,20 @@
           try {   xhr = new ActiveXObject('Microsoft.XMLHTTP');    }
           catch (e2) {
             try {  xhr = new XMLHttpRequest();     }
-            catch (e3) {  xhr = false; gebid("login_status") = "Sorry! There was an error making a HTTP request.";  }
+            catch (e3) {  xhr = false; loginStatus("Sorry! There was an error making a HTTP request.");  }
           }
         }
    
         xhr.onreadystatechange = function() {
-          gebid("login_status").innerHTML = "Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]";
+          loginStatus("Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]");
           if(xhr.readyState == 4) {
-            gebid("login_status").innerHTML = "Wikipedia login status: " + String(xhr.responseXML);
+            loginStatus("Wikipedia login status: " + String(xhr.responseXML));
           }
         };
         gebid("offline_button").style.display = ""; // Show "offline" button
         xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
         xhr.send("?action=login&lgname=" + gebid("login_username").value + "&lgpassword=" + gebid("login_password").value);
-        gebid("login_status").innerHTML = "Just tried to log in Wikipedia user " + gebid("login_username") + ".";
+        loginStatus("Just tried to log in Wikipedia user " + gebid("login_username") + ".");
       }
       
       function hideLoginPane() {
@@ -257,7 +266,7 @@
       </tr>
       </table>
       <span id="login_status">Enter your Wikipedia username and password.</span>
-      <br />
+      <div id="login_show_statuses">&nbsp;</div>
       <button type="button" id="login_button" onclick="login();">Login</button>
       <button type="button" id="offline_button" onclick="hideLoginPane();offlineMode=new Boolean(1);">Offline Mode</button>
     </div>
