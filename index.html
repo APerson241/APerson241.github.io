@@ -208,6 +208,8 @@
         case "pending":
           gebid("missing").className = "";
           gebid("backlog_span").innerHTML = "Category:Pending AfC submissions";
+          var xmlDoc = $.ajax("https://en.wikipedia.org/w/api.php?action=query&titles=Category:Pending_AfC_submissions&prop=categoryinfo");
+          gebid("backlog_count").innerHTML = String(xmlDoc);
           break;
         }
       }
