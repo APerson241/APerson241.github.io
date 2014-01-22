@@ -53,6 +53,7 @@
         transition: 1s ease;
       }
       #login_show_statuses:hover { border-bottom: thin solid black; color: black;}
+      #login_show_statuses:active { background-color: #EEE; }
       #login_status, #login_show_statuses { font-size: 80%; }
       #backlog_bar {
         border: thin solid black;
@@ -275,7 +276,7 @@
       </tr>
       </table>
       <span id="login_status">Enter your Wikipedia username and password.</span>
-      <div id="login_show_statuses" onclick="alert(loginStatuses);">Show Statuses</div>
+      <div>><span id="login_show_statuses" onclick="alert(loginStatuses);">Show Statuses</span></div>
       <button type="button" id="login_button" onclick="login();">Login</button>
       <button type="button" id="offline_button" onclick="hideLoginPane();offlineMode=new Boolean(1);">Offline Mode</button>
     </div>
