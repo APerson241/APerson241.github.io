@@ -247,12 +247,11 @@
       }
 
       function offlineSkip() {
-        if(offlineMode) {
-          $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=MNIST%20database&format=json", function(data) {
-            gebid("article_text").innerHTML = data.parse.text["*"];
-            gebid("article_heading").innerHTML = data.parse.title;
-          });
-        }
+        $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=MNIST%20database&format=json", function(data) {
+          alert(String(data));
+          gebid("article_text").innerHTML = data.parse.text["*"];
+          gebid("article_heading").innerHTML = data.parse.title;
+        });
       }
       
       function toggleShowLoginStatuses() {
