@@ -247,6 +247,7 @@
       }
 
       function offlineSkip() {
+        alert("Loading page MNIST database...");
         $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=MNIST%20database&format=json", function(data) {
           alert(String(data));
           gebid("article_text").innerHTML = data.parse.text["*"];
@@ -324,8 +325,8 @@
       </div>
       <br />
       <div id="pending_pane">
-        <h2>Pending Edits</h2>
-        <p><i>Pending edits will go here.</i></p>
+        <h2>Pending Actions</h2>
+        <p><i>Pending actions will go here.</i></p>
       </div>
     </div>
     <div id="article_pane">
