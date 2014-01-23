@@ -142,7 +142,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript">
-      const MIN_LOGIN_PANE_HEIGHT = 210;
+      const MIN_LOGIN_PANE_HEIGHT = 200;
       var currentBacklog = "pending";
       var offlineMode = new Boolean();
       var offlineModeBacklogCount = 32000;
@@ -175,7 +175,7 @@
         gebid("login_statuses").innerHTML = loginStatuses;
       }
 
-      function login() {
+      function oldLogin() {
         var xhr; // Yes, this is the request object.
         try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
         catch (e) 
@@ -197,6 +197,12 @@
         xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
         xhr.send("?action=login&lgname=" + gebid("login_username").value + "&lgpassword=" + gebid("login_password").value);
         loginStatus("Just tried to log in Wikipedia user " + gebid("login_username").value + ".");
+      }
+      
+      function login() {
+        gebid("offline_button").style.display = ""; // Show "offline" button
+        loginStatus("Attempting to log in Wikipedia user " + gebid("login_username").value + "...");
+        loginStatus("Login not implemented yet.");
       }
       
       function hideLoginPane() {
