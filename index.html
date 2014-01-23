@@ -160,6 +160,7 @@
       function load() {
         gebid("offline_button").style.display = "none"; // Hide "offline" button
         gebid("backlog_selection_menu").style.display = "none";
+        $("#login_statuses").slideUp(1);
         
         gebid("overlay").style.width = window.innerWidth + "px";
         gebid("overlay").style.height = window.innerHeight + "px";
@@ -171,9 +172,7 @@
       function loginStatus(status) {
         gebid("login_status").innerHTML = status;
         loginStatuses += "<br />" + status;
-        if(gebid("login_show_statuses").innerHTML === "Hide Statuses") {
-          gebid("login_statuses").innerHTML = loginStatuses;
-        }
+        gebid("login_statuses").innerHTML = loginStatuses;
       }
 
       function login() {
@@ -260,11 +259,10 @@
       function toggleShowLoginStatuses() {
         if(gebid("login_show_statuses").innerHTML === "Show Statuses") {
           gebid("login_show_statuses").innerHTML = "Hide Statuses";
-          gebid("login_statuses").innerHTML = loginStatuses;
-          $("#login_statuses").slideDown();
+          $("#login_statuses").slideDown(250);
         } else {
           gebid("login_show_statuses").innerHTML = "Show Statuses";
-          $("#login_statuses").slideUp();
+          $("#login_statuses").slideUp(250);
         }
       }
 
