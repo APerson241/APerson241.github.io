@@ -259,10 +259,10 @@
       function toggleShowLoginStatuses() {
         if(gebid("login_show_statuses").innerHTML === "Show Statuses") {
           gebid("login_show_statuses").innerHTML = "Hide Statuses";
-          $("#login_statuses").slideDown(250);
+          $("#login_statuses").slideDown("fast");
         } else {
           gebid("login_show_statuses").innerHTML = "Show Statuses";
-          $("#login_statuses").slideUp(250);
+          $("#login_statuses").slideUp("fast");
         }
       }
 
