@@ -41,15 +41,17 @@
         text-align: center;
       }
       #login_pane table { margin: 0px auto; }
+      #login_statuses { font-size: 80%; background-color: #EEE; text-align: left; }
       #login_show_statuses {
+        font-size: 70%;
         color: #555;
         cursor: pointer;
         border-bottom: thin solid transparent;
         background-color: transparent;
       }
-      #login_show_statuses:hover { border-bottom: thin solid black; color: black;}
+      #login_show_statuses:hover { border-bottom: thin solid black; color: black; }
       #login_show_statuses:active { background-color: #AAA; }
-      #login_status, #login_show_statuses { font-size: 80%; }
+      #login_status { font-size: 80%; margin-bottom: 5px;}
       #backlog_bar {
         border: thin solid black;
         border-radius: 3px;
@@ -140,6 +142,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript">
+      const MIN_LOGIN_PANE_HEIGHT = 210;
       var currentBacklog = "pending";
       var offlineMode = new Boolean();
       var offlineModeBacklogCount = 32000;
@@ -162,12 +165,15 @@
         gebid("overlay").style.height = window.innerHeight + "px";
         gebid("login_pane").style.top = (window.innerHeight / 2 - 75) + "px";
         gebid("login_pane").style.left = (window.innerWidth / 2 - 150) + "px";
-        gebid("login_pane").style.height = ((window.innerHeight / 4 >= 200)?(window.innerHeight/4):200) + "px";
+        gebid("login_pane").style.height = ((window.innerHeight / 4 >= MIN_LOGIN_PANE_HEIGHT)?(window.innerHeight/4):MIN_LOGIN_PANE_HEIGHT) + "px";
       }
       
       function loginStatus(status) {
         gebid("login_status").innerHTML = status;
-        loginStatuses += "\n" + status;
+        loginStatuses += "<br />" + status;
+        if(gebid("login_show_statuses").innerHTML === "Hide Statuses") {
+          gebid("login_statuses").innerHTML = loginStatuses;
+        }
       }
 
       function login() {
@@ -191,7 +197,7 @@
         gebid("offline_button").style.display = ""; // Show "offline" button
         xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
         xhr.send("?action=login&lgname=" + gebid("login_username").value + "&lgpassword=" + gebid("login_password").value);
-        loginStatus("Just tried to log in Wikipedia user " + gebid("login_username") + ".");
+        loginStatus("Just tried to log in Wikipedia user " + gebid("login_username").value + ".");
       }
       
       function hideLoginPane() {
@@ -236,7 +242,29 @@
 
       function offlineSkip() {
         if(offlineMode) {
-          $.getJSON("http://en.wikipedia.org/w/api.php?format=json&action=query&titles=Main%20Page&prop=revisions&rvprop=content", function(data) {gebid("article_text").innerHTML = data;});
+          $.getJSON("https://en.wikipedia.org/w/api.php?format=json&action=query&titles=Main%20Page&prop=revisions&rvprop=content", function(data) {
+            var tbl_body = "";
+            $.each(data, function() {
+              var tbl_row = "";
+              $.each(this, function(k , v) {
+                tbl_row += "<td>"+v+"</td>";
+              })
+              tbl_body += "<tr>"+tbl_row+"</tr>";                 
+            })
+            gebid("article_text").innerHTML = tbl_body;
+          });
+        }
+      }
+      
+      function toggleShowLoginStatuses() {
+        if(gebid("login_show_statuses").innerHTML === "Show Statuses") {
+          gebid("login_show_statuses").innerHTML = "Hide Statuses";
+          gebid("login_statuses").innerHTML = loginStatuses;
+          gebid("login_statuses").style.padding = "2px";
+        } else {
+          gebid("login_show_statuses").innerHTML = "Show Statuses";
+          gebid("login_statuses").innerHTML = "";
+          gebid("login_statuses").style.padding = "0px";
         }
       }
 
@@ -271,9 +299,11 @@
       </tr>
       </table>
       <span id="login_status">Enter your Wikipedia username and password.</span>
-      <div><span id="login_show_statuses" onclick="alert(loginStatuses);">Show Statuses</span></div>
+      <br />
       <button type="button" id="login_button" onclick="login();">Login</button>
       <button type="button" id="offline_button" onclick="hideLoginPane();offlineMode=new Boolean(1);">Offline Mode</button>
+      <div id="login_statuses"></div>
+      <span id="login_show_statuses" onclick="toggleShowLoginStatuses();">Show Statuses</span>
     </div>
     <div id="top_bar">YABBr: Yet Annother Backlog Burninator - Mockup Version 0.0.2</div>
     <br />
@@ -298,7 +328,7 @@
       <br />
       <div id="pending_pane">
         <h2>Pending Edits</h2>
-        <p><i>Eventually, pending edits will go here.</i></p>
+        <p><i>Pending edits will go here.</i></p>
       </div>
     </div>
     <div id="article_pane">
