@@ -146,7 +146,7 @@
       var currentBacklog = "pending";
       var offlineMode = new Boolean();
       var offlineModeBacklogCount = 32000;
-      var loginStatuses = "Loaded variables.";
+      var loginStatuses = "Loaded page.";
 
       /**
        * Alias for document.getElementById.
@@ -301,7 +301,7 @@
       <button type="button" id="login_button" onclick="login();">Login</button>
       <button type="button" id="offline_button" onclick="hideLoginPane();offlineMode=new Boolean(1);">Offline Mode</button>
       <br />
-      <div id="login_statuses"></div>
+      <div id="login_statuses">Loaded page.</div>
       <span id="login_show_statuses" onclick="toggleShowLoginStatuses();">Show Statuses</span>
     </div>
     <div id="top_bar">YABBr: Yet Annother Backlog Burninator - Mockup Version 0.0.2</div>
