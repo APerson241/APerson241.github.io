@@ -248,16 +248,9 @@
 
       function offlineSkip() {
         if(offlineMode) {
-          $.getJSON("https://en.wikipedia.org/w/api.php?format=json&action=query&titles=Main%20Page&prop=revisions&rvprop=content", function(data) {
-            var tbl_body = "";
-            $.each(data, function() {
-              var tbl_row = "";
-              $.each(this, function(k , v) {
-                tbl_row += "<td>"+v+"</td>";
-              })
-              tbl_body += "<tr>"+tbl_row+"</tr>";                 
-            })
-            gebid("article_text").innerHTML = tbl_body;
+          $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=MNIST%20database&format=json", function(data) {
+            gebid("article_text").innerHTML = data.parse.text["*"];
+            gebid("article_heading").innerHTML = data.parse.title;
           });
         }
       }
