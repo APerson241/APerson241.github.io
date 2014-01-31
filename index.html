@@ -130,7 +130,11 @@
       #login_button { background-color: #CCCCFF; }
       #offline_button { background-color: #FFCCCC; }
       button:hover { border: thin black solid; }
-      button:active { border: thin black dashed; }
+      button:active {
+        -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.05);
+        -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: inset 0 3px 7px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.05);
+      }
       .gray { color: #AAAAAA; }
       #backlog_selection_icon {
         font-size: 0.5em;
@@ -252,7 +256,7 @@
           alert(String(data));
           gebid("article_text").innerHTML = data.parse.text["*"];
           gebid("article_heading").innerHTML = data.parse.title;
-        });
+        }).always(function(data) { alert("Still loading...");});
       }
       
       function toggleShowLoginStatuses() {
