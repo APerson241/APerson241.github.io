@@ -235,13 +235,13 @@
         case "missing":
           gebid("pending").className = "";
           gebid("backlog_span").innerHTML = "Category:AfC submissions with missing AfC template";
-          var xmlDoc = $.getJSON("https://en.wikipedia.org/w/api.php?action=query&titles=Category:AfC_submissions_with_missing_AfC_template&prop=categoryinfo&format=json");
+          var xmlDoc = $.getJSON("//en.wikipedia.org/w/api.php?action=query&titles=Category:AfC_submissions_with_missing_AfC_template&prop=categoryinfo&format=json");
           gebid("backlog_count").innerHTML = JSON.stringify(xmlDoc.query.pages["34025321"].categoryinfo.pages) + " <span style=\"font-size: 0.5em;\">remaining</span>";
           break;
         case "pending":
           gebid("missing").className = "";
           gebid("backlog_span").innerHTML = "Category:Pending AfC submissions";
-          var xmlDoc = $.getJSON("https://en.wikipedia.org/w/api.php?action=query&titles=Category:Pending_AfC_submissions&prop=categoryinfo&format=json");
+          var xmlDoc = $.getJSON("//en.wikipedia.org/w/api.php?action=query&titles=Category:Pending_AfC_submissions&prop=categoryinfo&format=json");
           gebid("backlog_count").innerHTML = JSON.stringify(xmlDoc.query.pages["23148779"].categoryinfo.pages) + " <span style=\"font-size: 0.5em;\">remaining</span>";
           break;
         }
