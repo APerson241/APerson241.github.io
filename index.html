@@ -163,8 +163,8 @@
 
       function load() {
         gebid("offline_button").style.display = "none"; // Hide "offline" button
-        gebid("backlog_selection_menu").style.display = "none";
         $("#login_statuses").slideUp(1);
+        $("backlog_selection_menu").slideUp("1");
         
         gebid("overlay").style.width = window.innerWidth + "px";
         gebid("overlay").style.height = window.innerHeight + "px";
@@ -178,35 +178,11 @@
         loginStatuses += "<br />" + status;
         gebid("login_statuses").innerHTML = loginStatuses;
       }
-
-      function oldLogin() {
-        var xhr; // Yes, this is the request object.
-        try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
-        catch (e) 
-        {
-          try {   xhr = new ActiveXObject('Microsoft.XMLHTTP');    }
-          catch (e2) {
-            try {  xhr = new XMLHttpRequest();     }
-            catch (e3) {  xhr = false; loginStatus("Sorry! There was an error making a HTTP request.");  }
-          }
-        }
-   
-        xhr.onreadystatechange = function() {
-          loginStatus("Ajax status: HTTP " + xhr.status + " [" + xhr.readyState + "]");
-          if(xhr.readyState == 4) {
-            loginStatus("Wikipedia login status: " + String(xhr.responseXML));
-          }
-        };
-        gebid("offline_button").style.display = ""; // Show "offline" button
-        xhr.open("GET", "//en.wikipedia.org/w/api.php", true); 
-        xhr.send("?action=login&lgname=" + gebid("login_username").value + "&lgpassword=" + gebid("login_password").value);
-        loginStatus("Just tried to log in Wikipedia user " + gebid("login_username").value + ".");
-      }
       
       function login() {
         gebid("offline_button").style.display = ""; // Show "offline" button
         loginStatus("Attempting to log in Wikipedia user " + gebid("login_username").value + "...");
-        loginStatus("Login not implemented yet.");
+        
       }
       
       function hideLoginPane() {
@@ -216,29 +192,30 @@
       }
 
       function toggleBacklogMenu() {
-        if(gebid("backlog_selection_menu").style.display == "none") {
-          gebid("backlog_selection_menu").style.display = "";
+        if(gebid("backlog_selection_icon").innerHTML === "(change)") {
+          $("backlog_selection_menu").slideDown("fast");
           gebid("backlog_selection_icon").innerHTML = "(close)";
            
         } else {
-          gebid("backlog_selection_menu").style.display = "none";
+          $("backlog_selection_menu").slideUp("fast");
           gebid("backlog_selection_icon").innerHTML = "(change)";
         }
       }
 
       function onBacklogSelection(backlog) {
-        $(backlog).className = "selected";
         toggleBacklogMenu();
         switch(backlog) {
         case "missing":
+          gebid("missing").className = "selected";
           gebid("pending").className = "";
           gebid("backlog_span").innerHTML = "Category:AfC submissions with missing AfC template";
           break;
         case "pending":
+          gebid("pending").className = "selected";
           gebid("missing").className = "";
           gebid("backlog_span").innerHTML = "Category:Pending AfC submissions";
-          var xmlDoc = $.ajax("https://en.wikipedia.org/w/api.php?action=query&titles=Category:Pending_AfC_submissions&prop=categoryinfo");
-          gebid("backlog_count").innerHTML = String(xmlDoc);
+          var catQuery = $.ajax("https://en.wikipedia.org/w/api.php?action=query&titles=Category:Pending_AfC_submissions&prop=categoryinfo&format=json");
+          gebid("backlog_count").innerHTML = catQuery.query.pages["23148779"].categoryinfo.pages;
           break;
         }
       }
