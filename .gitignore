@@ -28,3 +28,6 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+# jEdit crud
+*.*~

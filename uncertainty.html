@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uncertainty Converter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function update() {
+          $("#max").text(parseFloat(document.getElementById("measurement").value) + parseFloat(document.getElementById("uncertainty").value));
+          $("#min").text(parseFloat(document.getElementById("measurement").value) - parseFloat(document.getElementById("uncertainty").value));
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Uncertainty Converter</h1>
+    <div id="breadcrumbs"><a href="index.html" title="Home">Home</a> > <b>Uncertainty</b></div>
+    <p>
+      A converter between uncertainty measurements in the form x +- y and
+      minimum/maximum values.
+    </p>
+    <hr />
+    <input type="text" id="measurement" onblur="update(); "/> +- <input type="text" id="uncertainty" onblur="update();" />
+    <br />
+    <br />
+    <button onclick="update();">Update</button>
+    <br />
+    <br />
+    Maximum: <span id="max">0.00</span>
+    <br />
+    Minimum: <span id="min">0.00</span>
+  </body>
+</html>

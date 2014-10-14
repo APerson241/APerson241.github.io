@@ -1,0 +1,24 @@
+body {
+    font-family: sans-serif;
+    background-color: #F6F6F6;
+    color: #252525;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 150%;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: thin dotted #252525;
+}
+
+#breadcrumbs {
+    font-size: 80%;
+}
