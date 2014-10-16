@@ -8,8 +8,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
       function update() {
-          $("#max").text(parseFloat(document.getElementById("measurement").value) + parseFloat(document.getElementById("uncertainty").value));
-          $("#min").text(parseFloat(document.getElementById("measurement").value) - parseFloat(document.getElementById("uncertainty").value));
+          $("#max").text(parseFloat($("#measurement").value) + parseFloat($("#uncertainty").value));
+          $("#min").text(parseFloat($("#measurement").value) - parseFloat($("#uncertainty").value));
       }
     </script>
   </head>
