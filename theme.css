@@ -22,3 +22,26 @@ a:hover {
 #breadcrumbs {
     font-size: 80%;
 }
+
+.shaded {
+    background-color: #EEE;
+}
+
+.tickerLine, #currentResult {
+    font-family: Consolas, monospace;
+}
+
+#currentResult {
+    background-color: #CCF;
+    font-weight: bold;
+}
+
+#inputArea {
+    padding: 2px;
+    border: thin solid #EEE;
+}
+
+#error {
+    font-style: italic;
+    color: red;
+}
