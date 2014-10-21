@@ -1,5 +1,6 @@
 var lastLineShaded = false;
 var currentResult = new Measurement(0.0, 0.0);
+const operationSymbols = {add: "+", subtract: "-"};
 
 function Measurement(value, uncertainty) {
     this.value = value;
@@ -60,23 +61,24 @@ function calculate(operation) {
             currentResult.subtract(other);
             break;
         }
-        $("<div />", {
-            class: lastLineShaded ? "tickerLine" : "tickerLine shaded",
-            text: valueBeforeOperation + " (" + operation + ")" +
-                    other.toString() + " -> " + currentResult.toString()
-        }).appendTo("#tape");
+        printlnToTape(valueBeforeOperation + " " + operationSymbols[operation] +
+                " " + other.toString() + " = " + currentResult.toString());
     }
     $("#currentResult").text("Current result: " + currentResult.toString());
 
-    lastLineShaded = !lastLineShaded;
     $("#input").val("");
 }
 
 function reset() {
     currentResult = new Measurement(0.0, 0.0);
+    printlnToTape("(reset) = " + currentResult.toString());
+    $("#currentResult").text("Current result: " + currentResult.toString());
+}
+
+function printlnToTape(line) {
     $("<div />", {
         class: lastLineShaded ? "tickerLine" : "tickerLine shaded",
-        text: "(reset) -> " + currentResult.toString()
+        text: line
     }).appendTo("#tape");
-    $("#currentResult").text("Current result: " + currentResult.toString());
+    lastLineShaded = !lastLineShaded;
 }
