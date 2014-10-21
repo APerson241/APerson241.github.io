@@ -71,3 +71,12 @@ function calculate(operation) {
     lastLineShaded = !lastLineShaded;
     $("#input").val("");
 }
+
+function reset() {
+    currentResult = new Measurement(0.0, 0.0);
+    $("<div />", {
+        class: lastLineShaded ? "tickerLine" : "tickerLine shaded",
+        text: "(reset) -> " + currentResult.toString()
+    }).appendTo("#tape");
+    $("#currentResult").text("Current result: " + currentResult.toString());
+}
