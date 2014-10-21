@@ -61,8 +61,9 @@ function calculate(operation) {
             currentResult.subtract(other);
             break;
         }
-        printlnToTape(valueBeforeOperation + " " + operationSymbols[operation] +
-                " " + other.toString() + " = " + currentResult.toString());
+        printlnToTape("("valueBeforeOperation + ") " +
+                operationSymbols[operation] + " (" + other.toString() +
+                ") = " + currentResult.toString());
     }
     $("#currentResult").text("Current result: " + currentResult.toString());
 
