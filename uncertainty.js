@@ -61,7 +61,7 @@ function calculate(operation) {
             currentResult.subtract(other);
             break;
         }
-        printlnToTape("("valueBeforeOperation + ") " +
+        printlnToTape("(" + valueBeforeOperation + ") " +
                 operationSymbols[operation] + " (" + other.toString() +
                 ") = " + currentResult.toString());
     }
