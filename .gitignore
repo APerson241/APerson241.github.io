@@ -31,3 +31,6 @@ $RECYCLE.BIN/
 
 # jEdit crud
 *.*~
+
+# Bower components
+bower_components/
