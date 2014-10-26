@@ -12,17 +12,22 @@
     <h1>Uncertainty Calculator</h1>
     <div id="breadcrumbs"><a href="index.html" title="Home">Home</a> > <b>Uncertainty</b></div>
     <p>
-      A simple calculator that takes uncertainty into account.
-    </p>
+      This is a simple calculator that takes uncertainty into account. Integers
+      and floating points both work.
     <hr />
     <div id="tape">
     </div>
-    <div id="currentResult"><b>Current result:</b> 0.0 +- 0.0</div>
+    <div id="currentResult">Current result: 0.0 +- 0.0</div>
     <div id="inputArea">
       <input type="text" id="input" />
-      <button onclick="calculate('add');">Add</button>
-      <button onclick="calculate('subtract');">Subtract</button>
-      <a href="#" onclick="reset();">Reset</a>
+      <br />
+      <button class="operation" onclick="calculate('add');">Add</button>
+      <button class="operation" onclick="calculate('subtract');">Subtract</button>
+      <button class="operation" onclick="calculate('multiply');">Multiply</button>
+      <button class="operation" onclick="calculate('divide');">Divide</button>
+      <a class="action" href="#" onclick="reset();">Reset</a>
+      |
+      <a class="action" href="#" onclick="clearTape();">Clear</a>
       <br />
       <span id="error"></span>
     </div>

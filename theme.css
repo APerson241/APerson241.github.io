@@ -11,6 +11,10 @@ h1 {
     font-size: 150%;
 }
 
+h2 {
+    font-size: 130%;
+}
+
 a {
     text-decoration: none;
 }
@@ -44,4 +48,12 @@ a:hover {
 #error {
     font-style: italic;
     color: red;
+}
+
+.maxmin {
+    font-size: 80%;
+}
+
+.maxmin:hover {
+    font-weight: bold;
 }
