@@ -1,4 +1,4 @@
-#Scripts I use
+# Scripts I use
 *.bat
 
 # Installshield output folder
@@ -33,4 +33,4 @@ $RECYCLE.BIN/
 *.*~
 
 # Bower components
-bower_components/
+*bower*
