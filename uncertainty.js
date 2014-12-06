@@ -115,6 +115,9 @@ function calculate(operation) {
                 ") = " + currentResult.toString(), calculationResult);
     }
     $("#currentResult").text("Current result: " + currentResult.toString());
+    if($("#clearOnCalc").is(':checked')) {
+        $("#input").val("");
+    }
 }
 
 function reset() {
