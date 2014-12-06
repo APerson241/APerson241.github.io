@@ -49,9 +49,9 @@ Measurement.prototype.multiply = function(otherValue) {
 
 Measurement.prototype.divide = function(otherValue) {
     var maximumResult = (this.value + this.uncertainty) /
-            (otherValue.value + otherValue.uncertainty);
-    var minimumResult = (this.value - this.uncertainty) /
             (otherValue.value - otherValue.uncertainty);
+    var minimumResult = (this.value - this.uncertainty) /
+            (otherValue.value + otherValue.uncertainty);
 
     this.value = ((maximumResult + minimumResult) / 2);
     this.uncertainty = ((maximumResult - minimumResult) / 2);
