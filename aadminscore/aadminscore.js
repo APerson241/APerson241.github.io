@@ -31,7 +31,7 @@ $(document).ready(function() {
         },
         "Blocks":{
             url: function(username) {
-                return "http://en.wikipedia.org/w/api.php?action=query&list=logevents&letitle=User:" + username + "&letype=block&format=json&callback=?&continue=";
+                return "http://en.wikipedia.org/w/api.php?action=query&list=logevents&letitle=User:" + username + "&leaction=block/block&format=json&callback=?&continue=";
             },
             metric: function(data) {
                 var blockCount = data.query.logevents.length;
