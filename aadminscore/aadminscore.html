@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Asynchronous Admin Score</title>
+    <link href="mw.css" rel="stylesheet" />
+    <link href="aadminscore.css" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/jquery.ajax-cross-origin.min.js"></script>
+    <script src="js/aadminscore.js"></script>
+  </head>
+  <body>
+    <h1>Asynchronous Admin Score</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" class="mw-ui-input mw-ui-input-inline"/>
+    <button id="submit" class="mw-ui-button mw-ui-constructive">Submit</button>
+    <div id="result" style="display:none;">
+      <div id="score_wrapper"></div>
+      <h2>Score components</h2>
+      <ul id="components"></ul>
+    </div>
+  </body>
+</html>

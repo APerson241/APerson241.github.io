@@ -1,0 +1,19 @@
+body {
+    font-family: sans-serif;
+}
+
+h2 {
+    font-size: 120%;
+}
+
+#score {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#score_wrapper {
+    background-color: #EEEEFF;
+    padding: 5px;
+    margin: 5px;
+    font-size: larger;
+}
