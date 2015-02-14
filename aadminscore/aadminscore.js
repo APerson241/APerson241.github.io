@@ -42,7 +42,6 @@ $(document).ready(function() {
                 }
             },
             delta: function(metric) {
-                console.log("Finding delta for " + JSON.stringify(metric));
                 if(metric.count === 0) {
                     return BLOCK_COUNT_MULTIPLIER * 100;
                 } else {
@@ -74,6 +73,48 @@ $(document).ready(function() {
             },
             delta: function(metric) {
                 return (metric === "missing") ? -50 : 10;
+            }
+        },
+        "User rights":{
+            url: function(username) {
+                return "https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=" + username + "&usprop=groups&format=json&callback=?&continue=";
+            },
+            metric: function(data) {
+                var groups = $.grep(data.query.users[0].groups, function(x) { return (x !== "*") && (x !== "user") && (x !== "autoconfirmed"); });
+                if(groups.length == 0) {
+                    return {raw: groups, formatted: "none"};
+                } else if(groups.length == 1) {
+                    return {raw: groups, formatted: groups[0]};
+                } else if(groups.length == 2) {
+                    return {raw: groups, formatted: groups[0] + " and " + groups[1]};
+                } else {
+                    var formattedMetric = groups[0];
+                    for(var i = 1; i < groups.length - 1; i++) {
+                        formattedMetric += ", " + groups[i];
+                    }
+                    formattedMetric += ", and " + groups[groups.length - 1];
+                    return {raw: groups, formatted: formattedMetric};
+                }
+            },
+            delta: function(groups) {
+                var score = 0;
+                const groupScores = {"abusefilter": 25,
+                                     "accountcreator": 10,
+                                     "autoreviewer": 20,
+                                     "checkuser": 25,
+                                     "filemover": 15,
+                                     "reviewer": 5,
+                                     "rollbacker": 5,
+                                     "templateeditor": 20}
+                for(var i = 0; i < groups.length; i++) {
+                    if(groupScores.hasOwnProperty(groups[i])) {
+                        score += groupScores[groups[i]];
+                    }
+                }
+                if(score > 100) {
+                    score = 100;
+                }
+                return score;
             }
         }
     };
