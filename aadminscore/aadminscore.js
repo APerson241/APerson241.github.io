@@ -25,7 +25,7 @@ $(document).ready(function() {
                 if(edits < 350) {
                     return EDIT_COUNT_MULTIPLIER * -200;
                 } else {
-                    return EDIT_COUNT_MULTIPLIER * (71.513 * Math.log(metric) - 621.0874);
+                    return EDIT_COUNT_MULTIPLIER * (71.513 * Math.log(edits) - 621.0874);
                 }
             }
         },
