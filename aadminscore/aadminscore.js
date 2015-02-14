@@ -21,8 +21,12 @@ $(document).ready(function() {
                 var count = data.query.users[0].editcount;
                 return {raw: count, formatted: numberWithCommas(count)};
             },
-            delta: function(metric) {
-                return EDIT_COUNT_MULTIPLIER * (71.513 * Math.log(metric) - 621.0874);
+            delta: function(edits) {
+                if(edits < 350) {
+                    return EDIT_COUNT_MULTIPLIER * -200;
+                } else {
+                    return EDIT_COUNT_MULTIPLIER * (71.513 * Math.log(metric) - 621.0874);
+                }
             }
         },
         "Blocks":{
@@ -47,6 +51,7 @@ $(document).ready(function() {
                 } else {
                     var score = 0.1977 * metric.since - 92.3255;
                     score -= 10 * metric.count;
+                    if(score > 100) score = 100;
                     return BLOCK_COUNT_MULTIPLIER * score;
                 }
             }
