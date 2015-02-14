@@ -88,7 +88,11 @@ $(document).ready(function() {
                 return {raw: count, formatted: numberWithCommas(count.toFixed(1)) + " days"};
             },
             delta: function(metric) {
-                return ACCOUNT_AGE_MULTIPLIER * (0.1799 * metric - 86.983);
+                if(metric < 43) {
+                    return ACCOUNT_AGE_MULTIPLIER * -200;
+                } else {
+                    return ACCOUNT_AGE_MULTIPLIER * (91.482 * Math.log(metric) - 544.85);
+                }
             }
         },
         "User page":{
