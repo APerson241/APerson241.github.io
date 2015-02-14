@@ -29,7 +29,30 @@ $(document).ready(function() {
                 }
             }
         },
-        "Blocks":{
+        "Block status":{
+            url: function(username) {
+                return "https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=" + username + "&usprop=blockinfo&format=json&callback=?&continue=";
+            },
+            metric: function(data) {
+                var hasentry = data.query.users[0].hasOwnProperty("blockexpiry");
+                if(data.query.users[0].hasOwnProperty("blockexpiry")) {
+                    var duration = data.query.users[0].blockexpiry;
+                    return {raw: duration, formatted: (duration === "infinity") ? "<b>indefinitely blocked</b>" : ("blocked for " + duration)};
+                } else {
+                    return {raw: "none", formatted: "not blocked"};
+                }
+            },
+            delta: function(duration) {
+                if(duration === "none") {
+                    return 0;
+                } else if(duration === "infinity") {
+                    return -500;
+                } else {
+                    return -100;
+                }
+            }
+        },
+        "Past blocks":{
             url: function(username) {
                 return "http://en.wikipedia.org/w/api.php?action=query&list=logevents&letitle=User:" + username + "&leaction=block/block&format=json&callback=?&continue=";
             },
@@ -148,17 +171,36 @@ $(document).ready(function() {
             .text("Admin score for " + username + ": ")
             .append($("<span>").text("0").attr("id", "score"));
         $("#components").empty();
-        $.each(scoreComponents, function(name, functions) {
+
+        var addComponent = function(index, name) {
+            var functions = scoreComponents[name];
+            console.log(name + " --> " + functions);
             $.getJSON(functions.url(username), function(data) {
                 var metric = functions.metric(data),
                     delta = functions.delta(metric.raw);
-                $("#components").append($("<li>")
-                                        .addClass("score_component")
-                                        .append(name + ": " + metric.formatted + " (")
-                                        .append(formatDelta(delta))
-                                        .append(")"));
-                $("#score").text((parseFloat($("#score").text()) + delta).toFixed(1));
+                if(name !== "Block status" || delta !== 0) {
+                    $("#components").append($("<li>")
+                                            .attr("id", name.toLowerCase().replace( / /g, '-' ))
+                                            .addClass("score_component")
+                                            .append(name + ": ")
+                                            .append(metric.formatted)
+                                            .append(" (")
+                                            .append(formatDelta(delta))
+                                            .append(")"));
+                    $("#score").text((parseFloat($("#score").text()) + delta).toFixed(1));
+                }
             });
-        });
+        };
+
+        // Run addComponent for everything but past blocks
+        var scoreComponentNames = $.grep(Object.keys(scoreComponents), function(x) {return x !== "Past blocks";});
+        $.each(scoreComponentNames, addComponent);
+
+        // Then perhaps run it for past blocks
+        setTimeout(function() {
+            if(!$("#block-status").length) {
+                addComponent(0, "Past blocks");
+            }
+        }, 250);
     });
 });
