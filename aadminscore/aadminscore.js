@@ -11,9 +11,10 @@ $(document).ready(function() {
     const EDIT_COUNT_MULTIPLIER = 1.25;
     const BLOCK_COUNT_MULTIPLIER = 1.4;
     const ACCOUNT_AGE_MULTIPLIER = 1.25;
+    const ARTICLES_CREATED_MULTIPLIER = 1.4;
 
     var scoreComponents = {
-        "Edit count":{
+        "Edit count": {
             url: function(username) {
                 return "http://en.wikipedia.org/w/api.php?action=query&list=users&ususers=User:" + username + "&usprop=editcount&format=json&callback=?&continue=";
             },
@@ -29,7 +30,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "Block status":{
+        "Block status": {
             url: function(username) {
                 return "https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=" + username + "&usprop=blockinfo&format=json&callback=?&continue=";
             },
@@ -52,7 +53,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "Past blocks":{
+        "Past blocks": {
             url: function(username) {
                 return "http://en.wikipedia.org/w/api.php?action=query&list=logevents&letitle=User:" + username + "&leaction=block/block&format=json&callback=?&continue=";
             },
@@ -79,7 +80,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "Account age":{
+        "Account age": {
             url: function(username) {
                 return "http://en.wikipedia.org/w/api.php?action=query&list=users&ususers=" + username + "&usprop=registration&format=json&callback=?&continue=";
             },
@@ -95,7 +96,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "User page":{
+        "User page": {
             url: function(username) {
                 return "http://en.wikipedia.org/w/api.php?action=query&prop=info&titles=User:" + username + "&format=json&callback=?&continue=";
             },
@@ -107,7 +108,7 @@ $(document).ready(function() {
                 return (metric === "missing") ? -50 : 10;
             }
         },
-        "User rights":{
+        "User rights": {
             url: function(username) {
                 return "https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=" + username + "&usprop=groups&format=json&callback=?&continue=";
             },
@@ -148,6 +149,18 @@ $(document).ready(function() {
                 }
                 return score;
             }
+        },
+        "Pages created": {
+            url: function(username) {
+                return "https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=" + username + "&uclimit=500&ucdir=older&ucprop=title&ucshow=new&ucnamespace=0&format=json&callback=?&continue=";
+            },
+            metric: function(data) {
+                var count = data.query.usercontribs.length;
+                return {raw: count, formatted: count + " article-space pages created"};
+            },
+            delta: function(metric) {
+                return ARTICLES_CREATED_MULTIPLIER * (36.07161 * Math.log(metric) - 68.8246);
+            }
         }
     };
 
@@ -178,7 +191,6 @@ $(document).ready(function() {
 
         var addComponent = function(index, name) {
             var functions = scoreComponents[name];
-            console.log(name + " --> " + functions);
             $.getJSON(functions.url(username), function(data) {
                 var metric = functions.metric(data),
                     delta = functions.delta(metric.raw);
