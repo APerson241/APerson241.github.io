@@ -5,8 +5,10 @@
     <title>Asynchronous Admin Score</title>
     <link href="mw.css" rel="stylesheet" />
     <link href="aadminscore.css" rel="stylesheet" />
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="aadminscore.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="aadminscore.min.js"></script>
   </head>
   <body>
     <h1>Asynchronous Admin Score</h1>
@@ -19,10 +21,13 @@
     <output id="error" stype="display: none;"></output>
     <output id="result" style="display:none;">
       <div id="score_wrapper"></div>
+      <!--<svg></svg>-->
       <h2>Score components</h2>
       <ul id="components"></ul>
     </output>
     <br />
-    <small>Questions? Comments? Contact the tool's maintainer at <a href="https://en.wikipedia.org/wiki/User_talk:APerson" title="APerson's talk page on the English Wikipedia">User talk:APerson</a>.</small>
+    <footer>
+      <a href="https://en.wikipedia.org/wiki/User:APerson" title="APerson's user page on the English Wikipedia">APerson</a> (<a href="https://en.wikipedia.org/wiki/User_talk:APerson" title="APerson's talk page on the English Wikipedia">talk!</a>) • <a href="https://github.com/APerson241/AAdminScore" title="Source code on GitHub">Source code</a> • <a href="https://github.com/APerson241/AAdminScore/issues" title="Issues on GitHub">Issues</a>
+    </footer>
   </body>
 </html>
