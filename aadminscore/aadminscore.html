@@ -7,8 +7,8 @@
     <link href="aadminscore.css" rel="stylesheet" />
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="aadminscore.min.js"></script>
+    <script src="../node_modules/d3/d3.min.js"></script>
+    <script src="aadminscore.js"></script>
   </head>
   <body>
     <h1>Asynchronous Admin Score</h1>
@@ -21,7 +21,9 @@
     <output id="error" stype="display: none;"></output>
     <output id="result" style="display:none;">
       <div id="score_wrapper"></div>
-      <!--<svg></svg>-->
+      <br style="clear: both" />
+      <h2>Score graph</h2>
+      <svg></svg>
       <h2>Score components</h2>
       <ul id="components"></ul>
     </output>
